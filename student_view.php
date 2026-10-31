@@ -9,7 +9,15 @@ include("connection.php");
 if (isset($_GET["message"])) {
     $message = $_GET["message"];
 }
-$query = "SELECT * FROM student ORDER BY nim ASC";
+
+$search = "";
+if (isset($_GET["search"]) && $_GET["search"] != "") {
+    $search = htmlentities(strip_tags(trim($_GET["search"])));
+    $search = mysqli_real_escape_string($connection, $search);
+    $query = "SELECT * FROM student WHERE name LIKE '%$search%' OR nim LIKE '%$search%' ORDER BY nim ASC";
+} else {
+    $query = "SELECT * FROM student ORDER BY nim ASC";
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -31,11 +39,20 @@ $query = "SELECT * FROM student ORDER BY nim ASC";
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </nav>
+
     <?php
     if (isset($message)) {
         echo "<div class='pesan'>$message</div>";
     }
     ?>
+
+    <form action="student_view.php" method="get">
+        <input type="text" name="search" placeholder="Cari nama atau NIM" value="<?php echo $search ?>">
+        <input type="submit" value="Cari">
+        <a href="student_view.php">Reset</a>
+    </form>
+    <br>
+
     <table border="1">
         <tr>
             <th>NIM</th>
