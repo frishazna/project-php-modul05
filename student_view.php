@@ -2,7 +2,7 @@
 session_start();
 if (!isset($_SESSION["username"])) {
     header("Location: login.php");
-    die();
+    exit();
 }
 include("connection.php");
 
@@ -10,11 +10,18 @@ if (isset($_GET["message"])) {
     $message = $_GET["message"];
 }
 
+// Fitur pencarian (nama atau NIM)
 $search = "";
-if (isset($_GET["search"]) && $_GET["search"] != "") {
+if (isset($_GET["search"]) && trim($_GET["search"]) !== "") {
     $search = htmlentities(strip_tags(trim($_GET["search"])));
-    $search = mysqli_real_escape_string($connection, $search);
-    $query = "SELECT * FROM student WHERE name LIKE '%$search%' OR nim LIKE '%$search%' ORDER BY nim ASC";
+    $search_escaped = mysqli_real_escape_string($connection, $search);
+    $query = "SELECT * FROM student
+              WHERE name LIKE '%$search_escaped%'
+                 OR nim LIKE '%$search_escaped%'
+                 OR birth_city LIKE '%$search_escaped%'
+                 OR faculty LIKE '%$search_escaped%'
+                 OR department LIKE '%$search_escaped%'
+              ORDER BY nim ASC";
 } else {
     $query = "SELECT * FROM student ORDER BY nim ASC";
 }
@@ -46,12 +53,14 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
     }
     ?>
 
-    <form action="student_view.php" method="get">
-        <input type="text" name="search" placeholder="Cari nama atau NIM" value="<?php echo $search ?>">
+    <!-- Form pencarian -->
+    <form action="student_view.php" method="get" style="margin-bottom: 15px;">
+        <input type="text" name="search" placeholder="Cari nama, NIM, kota, fakultas, jurusan" value="<?php echo $search; ?>" size="35">
         <input type="submit" value="Cari">
-        <a href="student_view.php">Reset</a>
+        <?php if ($search !== "") { ?>
+            <a href="student_view.php">Reset</a>
+        <?php } ?>
     </form>
-    <br>
 
     <table border="1">
         <tr>
@@ -69,8 +78,13 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
         if (!$result) {
             die("Query Error: " . mysqli_errno($connection) . " - " . mysqli_error($connection));
         }
+
+        if (mysqli_num_rows($result) == 0) {
+            echo "<tr><td colspan='8' style='text-align:center;'>Data tidak ditemukan</td></tr>";
+        }
+
         while ($data = mysqli_fetch_assoc($result)) {
-            $birth_date     = strtotime($data["birth_date"]);
+            $birth_date = strtotime($data["birth_date"]);
             $formatted_date = date("d-m-Y", $birth_date);
 
             echo "<tr>";
@@ -83,14 +97,14 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
             echo "<td>$data[gpa]</td>";
             echo "<td>";
             echo "<a href='student_edit.php?nim=$data[nim]'>Edit</a> ";
-            echo "<form action='student_delete.php' method='post' style='display:inline;' ";
-            echo "onsubmit=\"return confirm('Yakin ingin menghapus data $data[name]?');\">";
+            echo "<form action='student_delete.php' method='post' style='display:inline;' onsubmit=\"return confirm('Yakin hapus data ini?');\">";
             echo "<input type='hidden' name='nim' value='$data[nim]'>";
-            echo "<input type='submit' name='delete' value='Hapus'>";
+            echo "<input type='submit' value='Hapus'>";
             echo "</form>";
             echo "</td>";
             echo "</tr>";
         }
+
         mysqli_free_result($result);
         mysqli_close($connection);
         ?>
