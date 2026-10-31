@@ -1,0 +1,169 @@
+* {
+    box-sizing: border-box;
+}
+ 
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+ 
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 24px 28px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+ 
+#header {
+    margin-bottom: 8px;
+}
+ 
+#logo {
+    margin: 0;
+    color: #c8102e;
+    font-size: 28px;
+}
+ 
+hr {
+    border: none;
+    border-top: 2px solid #eee;
+    margin: 12px 0 16px;
+}
+ 
+/* Navigasi */
+nav ul {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+    display: flex;
+    gap: 8px;
+}
+ 
+nav ul li a {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #c8102e;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+}
+ 
+nav ul li a:hover {
+    background: #a00c24;
+}
+ 
+/* Pesan sukses dan error */
+.pesan {
+    background: #e8f5e9;
+    border: 1px solid #4caf50;
+    color: #2e7d32;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+ 
+.error {
+    background: #ffecec;
+    border: 1px solid #e53935;
+    color: #b71c1c;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+ 
+/* Tabel data */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+ 
+th,
+td {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+ 
+th {
+    background: #c8102e;
+    color: #fff;
+}
+ 
+tr:nth-child(even) td {
+    background: #fafafa;
+}
+ 
+tr:hover td {
+    background: #fdecee;
+}
+ 
+/* Form tambah / edit data */
+#form_mahasiswa fieldset {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 16px 20px;
+}
+ 
+#form_mahasiswa legend {
+    padding: 0 8px;
+    font-weight: bold;
+    color: #c8102e;
+}
+ 
+#form_mahasiswa p {
+    margin: 12px 0;
+}
+ 
+#form_mahasiswa label {
+    display: inline-block;
+    min-width: 130px;
+    font-weight: bold;
+}
+ 
+input[type="text"],
+input[type="password"],
+select {
+    padding: 7px 10px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 14px;
+}
+ 
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus {
+    outline: none;
+    border-color: #c8102e;
+}
+ 
+input[type="submit"] {
+    padding: 9px 20px;
+    background: #c8102e;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+ 
+input[type="submit"]:hover {
+    background: #a00c24;
+}
+ 
+/* Link aksi (Edit / Hapus) kalau ada di tabel */
+td a {
+    color: #c8102e;
+    text-decoration: none;
+    font-weight: bold;
+}
+ 
+td a:hover {
+    text-decoration: underline;
+}
