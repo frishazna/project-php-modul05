@@ -1,0 +1,5 @@
+belajar_form/folder_upload/*
+!belajar_form/folder_upload/.gitkeep
+.vscode/
+.idea/
+Thumbs.db

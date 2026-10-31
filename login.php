@@ -36,6 +36,7 @@
       session_start();
       $_SESSION["username"] = $username;
       header("Location: student_view.php");
+      exit();
     }
   }
   else {
@@ -67,9 +68,9 @@
         </p>
         <p>
           <label for="password">Password : </label>
-          <input type="password" name="password" id="password" value="<?php echo $username ?>">
+          <input type="password" name="password" id="password">
         </p>
-          <p>
+        <p>
           <input type="submit" name="submit" value="Log In">
         </p>
       </fieldset>
@@ -77,4 +78,3 @@
   </div>
 </body>
 </html>
-
